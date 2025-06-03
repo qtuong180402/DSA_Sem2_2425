@@ -15,7 +15,7 @@ public class FansyButton extends JLabel implements MouseListener {
         super(str);
         Font customFont;
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("Minecrafter.Reg.ttf")).deriveFont(50f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/fonts/Minecrafter.Reg.ttf")).deriveFont(50f);
             this.setFont(customFont);
         } catch (FontFormatException e) {
             e.printStackTrace();

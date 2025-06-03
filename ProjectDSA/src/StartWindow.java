@@ -15,14 +15,14 @@ public class StartWindow extends JFrame {
 
         ImageIcon logo = new ImageIcon();
         try {
-            logo = new ImageIcon(ImageIO.read(this.getClass().getResource("logo.png")));
+            logo = new ImageIcon(ImageIO.read(this.getClass().getResource("/images/logo.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("Minecrafter.Reg.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/fonts/Minecrafter.Reg.ttf")));
         } catch (IOException|FontFormatException e) {
             e.printStackTrace();
         }

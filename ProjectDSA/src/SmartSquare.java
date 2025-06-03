@@ -40,7 +40,7 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
     public SmartSquare(int x, int y, GameBoard board)
     {
         // Paint this square as gray block when initialization.
-        super(x, y, SmartSquare.class.getResource("/block.png"), board);
+        super(x, y, SmartSquare.class.getResource("/images/block.png"), board);
 
         // Assign coordinates to this square.
         xLocation = x;
@@ -145,7 +145,7 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
              * If this square contains a bomb, show the bomb image.
              * Then display the selection window
              */
-            setImage(SmartSquare.class.getResource("/bombReveal.png"));
+            setImage(SmartSquare.class.getResource("/images/bombReveal.png"));
             try {
                 openSound(".//src//images_Error.wav");
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -155,7 +155,7 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
             long costTime = System.currentTimeMillis() - ((SmartSquare) board.getSquareAt(0, 0)).getStartTime();
 //			cq.showBomb(xLocation, yLocation);
             window1("You used " + TimeChecker.calculateTime(costTime) +". Do you want to try again?", "Game Over",
-                    new ImageIcon(SmartSquare.class.getResource("/failFace.png")));
+                    new ImageIcon(SmartSquare.class.getResource("/images/failFace.png")));
         } else{
             thisSquareHasTraversed = false;
             /*
@@ -171,7 +171,7 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
                 cq.showBomb(xLocation, yLocation);
                 window("You win this game in " + TimeChecker.calculateTime(costTime) +
                                 "! Do you want to try again?","Congratulations",
-                        new ImageIcon(SmartSquare.class.getResource("/passFace.jpg")));
+                        new ImageIcon(SmartSquare.class.getResource("/images/passFace.jpg")));
             }
         }
     }
@@ -205,11 +205,11 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
 
         if (choose == JOptionPane.YES_OPTION)
         {
-            setImage(SmartSquare.class.getResource("/block.png"));
+            setImage(SmartSquare.class.getResource("/images/block.png"));
 
         }else {
             cq.showBomb(xLocation,yLocation);
-            window("Do you want to go back to the menu?\nOr click No to see a small suprise ;3", "Continute :>",new ImageIcon(SmartSquare.class.getResource("/passFace.jpg")));
+            window("Do you want to go back to the menu?\nOr click No to see a small suprise ;3", "Continute :>",new ImageIcon(SmartSquare.class.getResource("/images/passFace.jpg")));
             try {
                 Desktop desk = Desktop.getDesktop();
                 desk.browse(new URI("https://youtu.be/dQw4w9WgXcQ"));
@@ -238,14 +238,14 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
             // Show red flag.
             if (clickCount == 1)
             {
-                setImage(SmartSquare.class.getResource("/redFlag.png"));
+                setImage(SmartSquare.class.getResource("/images/redFlag.png"));
                 guessThisSquareIsBomb = true;
             }
 
             // Show question mark.
             if (clickCount == 2)
             {
-                setImage(SmartSquare.class.getResource("/questionMark.png"));
+                setImage(SmartSquare.class.getResource("/images/questionMark.png"));
                 guessThisSquareIsBomb = false;
             }
         }
