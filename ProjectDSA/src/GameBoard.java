@@ -1,23 +1,21 @@
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
 /**
  * This class provides a graphical model of a board game.
  * The class creates a rectangular panel of clickable squares,
  * of type SmartSquare. If a square is clicked by the user, a
  * callback method is invoked upon the corresponding SmartSquare instance.
  * The class is intended to be used as a basis for tile based games.
-
  */
 public class GameBoard extends JFrame implements ActionListener
 {
     private JPanel boardPanel = new JPanel();
-
     private int boardHeight;
     private int boardWidth;
     private GameSquare[][] board;
+    private ReplayManager replayManager;
 
     /**
      * Create a new game board of the given size.
@@ -76,6 +74,17 @@ public class GameBoard extends JFrame implements ActionListener
             return null;
 
         return board[x][y];
+    }
+
+    /**
+     * Setup for replay function
+     * @param manager
+     */
+    public void setReplayManager(ReplayManager manager) {
+        this.replayManager = manager;
+    }
+    public ReplayManager getReplayManager() {
+        return replayManager;
     }
 
     public void actionPerformed(ActionEvent e)
