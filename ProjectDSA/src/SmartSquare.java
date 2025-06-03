@@ -1,14 +1,11 @@
-
 import javax.sound.sampled.*;
 import javax.swing.*;
-
 import java.awt.Desktop;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 
 public class SmartSquare extends GameSquare implements MouseListener, TimeChecker
 {
@@ -29,7 +26,6 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
 
     /** The y co-ordinate of this square. **/
     private long startTime;
-
 
     /**
      * Create a new SmartSquare instance, which can be placed on a GameBoard.
@@ -128,6 +124,9 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
      */
     public void clicked()
     {
+        if (board.getReplayManager() != null) {
+            board.getReplayManager().recordMove(xLocation, yLocation, 1); // 1 = left click
+        }
 
         try {
             openSound(".//src//pick_block.wav");
@@ -153,7 +152,6 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
                 e.printStackTrace();
             }
             long costTime = System.currentTimeMillis() - ((SmartSquare) board.getSquareAt(0, 0)).getStartTime();
-//			cq.showBomb(xLocation, yLocation);
             window1("You used " + TimeChecker.calculateTime(costTime) +". Do you want to continue playing?", "Game Over",
                     new ImageIcon(SmartSquare.class.getResource("/images/failFace.png")));
         } else{
@@ -175,7 +173,40 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
             }
         }
     }
-//
+
+    /**
+     * Method to not show popup when replay
+     */
+    public void replayClicked() {
+        try {
+            openSound(".//src//pick_block.wav");
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+
+        CheckSquare cq = new CheckSquare(board);
+        guessThisSquareIsBomb = false;
+
+        if(thisSquareHasBomb) {
+            // Show only bomb image, no popup
+            setImage(SmartSquare.class.getResource("/images/bombReveal.png"));
+            try {
+                openSound(".//src//images_Error.wav");
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                e.printStackTrace();
+            }
+            cq.showBomb(xLocation, yLocation);
+        } else {
+            thisSquareHasTraversed = false;
+            cq.countBomb(xLocation, yLocation);
+
+            if (cq.isSuccess()) {
+                // Show only bomb image, no popup
+                cq.showBomb(xLocation, yLocation);
+            }
+        }
+    }
+
     /**
      * A method to achieve pop-up window.
      * @param msg the message to display on the window.
@@ -206,9 +237,7 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
     if (choose == JOptionPane.YES_OPTION)
     {
         setImage(SmartSquare.class.getResource("/images/block.png"));
-    }
-    else
-    {
+    } else {
         cq.showBomb(xLocation, yLocation);
         int menuChoose = JOptionPane.showConfirmDialog(
             board,
@@ -251,6 +280,10 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
             {
                 setImage(SmartSquare.class.getResource("/images/redFlag.png"));
                 guessThisSquareIsBomb = true;
+
+                if (board.getReplayManager() != null) {
+                    board.getReplayManager().recordMove(xLocation, yLocation, 3); // 3 = right click 1 time
+                }
             }
 
             // Show question mark.
@@ -258,8 +291,19 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
             {
                 setImage(SmartSquare.class.getResource("/images/questionMark.png"));
                 guessThisSquareIsBomb = false;
+
+                if (board.getReplayManager() != null) {
+                    board.getReplayManager().recordMove(xLocation, yLocation, 6); // 6 = right click 2 times
+                }
             }
         }
+    }
+
+    /**
+     * Set guess bomb status from replay
+     */
+    protected void setGuessThisSquareIsBomb(boolean guess) {
+        guessThisSquareIsBomb = guess;
     }
 
     // The following mouse events are not going to be handled in this class.
@@ -274,7 +318,6 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
 
     @Override
     public void mouseExited(MouseEvent e) {}
-
 
     public static void openSound(String path) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         File file = new File(path);
