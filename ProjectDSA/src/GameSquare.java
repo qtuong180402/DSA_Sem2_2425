@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import java.net.URL;
 
@@ -7,7 +5,6 @@ import java.net.URL;
  * This class provides a representation of a single game square.
  * The class is abstract, and should be extended to provide domain
  * specific functionality.
-
  */
 public abstract class GameSquare extends JButton
 {
@@ -38,7 +35,6 @@ public abstract class GameSquare extends JButton
 
     /**
      * Change the image displayed by this square to the given bitmap.
-     *
      * @param filename the filename of the image to display.
      */
     public void setImage(URL filename)
@@ -48,7 +44,6 @@ public abstract class GameSquare extends JButton
 
     /**
      * A method that is invoked when a user clicks on this square.
-     *
      */
     public abstract void clicked();
 }
