@@ -1,15 +1,15 @@
-
-
-
 import java.util.Random;
 
 public class ProduceBombs extends Bomb
 {
-
     public ProduceBombs(GameBoard board, int number)
     {
-
         super(board);
+
+        // Check if the game is currently in replay mode
+        if (board.getReplayManager() != null && board.getReplayManager().isReplaying()) {
+            return; // Do not generate new bombs during replay
+        }
 
         int count =0;
 
