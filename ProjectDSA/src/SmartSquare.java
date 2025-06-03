@@ -154,7 +154,7 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
             }
             long costTime = System.currentTimeMillis() - ((SmartSquare) board.getSquareAt(0, 0)).getStartTime();
 //			cq.showBomb(xLocation, yLocation);
-            window1("You used " + TimeChecker.calculateTime(costTime) +". Do you want to try again?", "Game Over",
+            window1("You used " + TimeChecker.calculateTime(costTime) +". Do you want to continue playing?", "Game Over",
                     new ImageIcon(SmartSquare.class.getResource("/images/failFace.png")));
         } else{
             thisSquareHasTraversed = false;
@@ -199,28 +199,39 @@ public class SmartSquare extends GameSquare implements MouseListener, TimeChecke
 
     public void window1(String msg, String title, Icon img)
     {
-        CheckSquare cq = new CheckSquare(board);
-        int choose = JOptionPane.showConfirmDialog(board, msg, title,
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,img);
+    CheckSquare cq = new CheckSquare(board);
+    int choose = JOptionPane.showConfirmDialog(board, msg, title,
+            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,img);
 
-        if (choose == JOptionPane.YES_OPTION)
-        {
-            setImage(SmartSquare.class.getResource("/images/block.png"));
-
-        }else {
-            cq.showBomb(xLocation,yLocation);
-            window("Do you want to go back to the menu?\nOr click No to see a small suprise ;3", "Continute :>",new ImageIcon(SmartSquare.class.getResource("/images/passFace.jpg")));
+    if (choose == JOptionPane.YES_OPTION)
+    {
+        setImage(SmartSquare.class.getResource("/images/block.png"));
+    }
+    else
+    {
+        cq.showBomb(xLocation, yLocation);
+        int menuChoose = JOptionPane.showConfirmDialog(
+            board,
+            "Do you want to go back to the menu?\nOr click No to see a small suprise ;3",
+            "Continute :>",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            new ImageIcon(SmartSquare.class.getResource("/images/passFace.jpg"))
+        );
+        if (menuChoose == JOptionPane.YES_OPTION) {
+            new Menu("Mine sweeper");
+            board.dispose();
+        } else {
             try {
                 Desktop desk = Desktop.getDesktop();
                 desk.browse(new URI("https://youtu.be/dQw4w9WgXcQ"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (URISyntaxException e) {
+            } catch (IOException | URISyntaxException e) {
                 throw new RuntimeException(e);
             }
             board.dispose();
         }
     }
+}
 
 
     /**
