@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,13 +9,14 @@ import java.util.regex.Pattern;
  * This class provides 4 options for user to start a new game.
  * These 4 options are "Beginner", "Intermediate", "Advanced" and "Custom".
  * After clicking "New Game" button, this pop-window is automatically closing.
-
  */
 public class Menu extends JFrame implements ActionListener
 {
     private JButton start;
+    private JButton replay;
     private JRadioButton beginner, intermediate, advanced, custom;
     private JTextField width, height, mines;
+    private static ReplayManager lastReplayManager;
 
     /**
      * Create a menu of the given title.
@@ -104,8 +103,14 @@ public class Menu extends JFrame implements ActionListener
 
         // Create the "New Game" button.
         start = new JButton("New Game");
-        start.setBounds(80,320,100,20);
+        start.setBounds(40,330,100,25);
         add(start);
+
+        // Create the "Replay Game" button.
+        replay = new JButton("Replay Game");
+        replay.setBounds(150,330,120,25);
+        add(replay);
+        replay.addActionListener(this);
 
         // Initialize the text fields' edit state.
         width.setEditable(false);
@@ -128,7 +133,7 @@ public class Menu extends JFrame implements ActionListener
 
         //Initialize this menu instance.
         beginner.setSelected(true);
-        setSize(280,400);
+        setSize(320,420);
         setLayout(null);
         setVisible(true);
         setResizable(false);
@@ -183,20 +188,44 @@ public class Menu extends JFrame implements ActionListener
 
             if(!errorFlag)
             {
-
                 // Close current window and then display the board that meets the requirements.
                 this.dispose();
                 GameBoard b = new GameBoard("Minesweeper", boardWidth, boardHeight);
+
+                // Create ReplayManager first
+                ReplayManager replayManager = new ReplayManager(b, boardWidth, boardHeight, bombs);
+                b.setReplayManager(replayManager);
+
+                // Generate bombs
                 new ProduceBombs(b, bombs);
+
+                // Start recording AND save bomb positions
+                replayManager.startRecording(); // Includes saveBombPositions()
+
+                // Set replay manager global
+                Menu.setLastReplayManager(replayManager);
+
                 ((SmartSquare) b.getSquareAt(0, 0)).setStartTime(System.currentTimeMillis());
             }
 
-        } else{
+        } else if (e.getSource() == replay) {
+            // Handle replays
+            if (lastReplayManager != null) {
+                this.dispose(); // Close menu
+                lastReplayManager.startReplay();
+            } else {
+                JOptionPane.showMessageDialog(null, "No game to replay!");
+            }
+        } else {
             // If user neither chooses "Custom" nor clicks "New Game" button, these fields cannot be editable.
             width.setEditable(false);
             height.setEditable(false);
             mines.setEditable(false);
         }
+    }
+
+    public static void setLastReplayManager(ReplayManager manager) {
+        lastReplayManager = manager;
     }
 
     /**
