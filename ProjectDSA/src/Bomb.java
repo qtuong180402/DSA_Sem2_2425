@@ -1,16 +1,15 @@
-
 /**
  * This class is abstract and should be extended to provide the domain specific functionality.
  */
 public abstract class Bomb
 {
-    /** The GameBoard instance**/
+    /** The GameBoard instance **/
     protected GameBoard board;
 
-    /** The height of this GameBoard instance**/
+    /** The height of this GameBoard instance **/
     protected int boardHeight;
 
-    /** The width of this GameBoard instance**/
+    /** The width of this GameBoard instance **/
     protected int boardWidth;
 
     /**
@@ -29,5 +28,4 @@ public abstract class Bomb
      * A method that is invoked when producing bombs on the game board.
      */
     protected abstract void reproduceBomb();
-
 }
