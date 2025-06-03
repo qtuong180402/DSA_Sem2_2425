@@ -1,17 +1,15 @@
-
 /**
-
  * This class provides a way to count the total number of bombs which surrounds the given square.
  */
 public class CheckSquare
 {
-    /** The GameBoard instance**/
+    /** The GameBoard instance **/
     private GameBoard board;
 
-    /** The height of this GameBoard instance**/
+    /** The height of this GameBoard instance **/
     private int boardHeight;
 
-    /** The width of this GameBoard instance**/
+    /** The width of this GameBoard instance **/
     private int boardWidth;
 
     private static final int[] distantX = {-1, 0, 1};
@@ -82,11 +80,12 @@ public class CheckSquare
     }
 
     /**
-     * This method counts the total number of bombs which surrounds the given square.
-     * If there is no bombs surrounds the square, paint this square as blank then expand its surrounding squares
-     * util find bombs of the surrounding squares are not empty. This method is implemented by recursion algorithm.
-     * @param currentX the x co-ordinate of the given square.
-     * @param currentY the y co-ordinate of the given square.
+     * Counts the total number of bombs surrounding the given square.
+     * If there are no bombs around the square, paints this square as blank and then
+     * recursively expands its surrounding squares until it finds squares adjacent to bombs.
+     * This method is implemented using a recursive algorithm.
+     * @param currentX the x-coordinate of the given square.
+     * @param currentY the y-coordinate of the given square.
      */
     protected void countBomb(int currentX, int currentY)
     {
