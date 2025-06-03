@@ -76,6 +76,13 @@ public class GameBoard extends JFrame implements ActionListener
         return board[x][y];
     }
 
+    public void actionPerformed(ActionEvent e)
+    {
+        // The button that has been pressed.
+        GameSquare b = (GameSquare)e.getSource();
+        b.clicked();
+    }
+
     /**
      * Setup for replay function
      * @param manager
@@ -85,12 +92,5 @@ public class GameBoard extends JFrame implements ActionListener
     }
     public ReplayManager getReplayManager() {
         return replayManager;
-    }
-
-    public void actionPerformed(ActionEvent e)
-    {
-        // The button that has been pressed.
-        GameSquare b = (GameSquare)e.getSource();
-        b.clicked();
     }
 }
