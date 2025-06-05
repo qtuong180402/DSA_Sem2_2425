@@ -95,13 +95,6 @@ Minesweeper is a classic single-player logic-based game. Players reveal squares 
 
 ---
 
-## 📷 Demo
-
-[📺 Insert screenshots or GIFs here]  
-[🎬 You can also include a YouTube link if recorded]
-
----
-
 ## 🧪 Use Case Scenario
 
 **Main Menu (`StartWindow`)**:
