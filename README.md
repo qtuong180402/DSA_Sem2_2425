@@ -136,7 +136,6 @@ Minesweeper is a classic single-player logic-based game. Players reveal squares 
 ## 🔗 References
 
 - [Classic Minesweeper Rules](https://en.wikipedia.org/wiki/Minesweeper_(video_game))
-- [Rickroll 🎵](https://www.youtube.com/watch?v=dQw4w9WgXcQ) _(because why not?)_
 
 ---
 
